@@ -14,4 +14,18 @@
 
     <property name="java.compilerargs" value="-Xlint:unchecked -Xlint:deprecation"/>
 
+    <target name="sonar" depends="-setup">
+        <pathconvert pathsep="," property="sonar.sources">
+            <fileset dir="${basedir}" includes="src/**/*.java"/>
+        </pathconvert>
+        <pathconvert pathsep="," property="sonar.libraries">
+            <fileset dir="${basedir}" includes="bin/classes" />
+        </pathconvert>
+        <property name="sonar.projectName" value="${ant.project.name}"/>
+        <property name="sonar.projectKey" value="${project.app.package}"/>
+        <xpath input="${manifest.abs.file}" expression="/manifest/@android:versionName" output="project.app.versionName" />
+        <property name="sonar.projectVersion" value="${project.app.versionName}"/>
+        <sonar:sonar xmlns:sonar="antlib:org.sonar.ant"/>
+    </target>
+
 </project>
