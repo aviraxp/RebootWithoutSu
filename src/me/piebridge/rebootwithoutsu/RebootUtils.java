@@ -1,12 +1,12 @@
 package me.piebridge.rebootwithoutsu;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.SystemProperties;
 import android.util.Log;
 
-public class RebootHookReceiver extends BroadcastReceiver {
+public class RebootUtils {
+
+    public static final String TAG = "RebootWoSu";
 
     public static final String ACTION = XposedMod.class.getPackage() + ".action.REBOOT";
 
@@ -14,11 +14,14 @@ public class RebootHookReceiver extends BroadcastReceiver {
 
     private static final String EXTRA_TITLE_REBOOT = "REBOOT";
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+    private RebootUtils() {
+
+    }
+
+    public static void hookIntent(Intent intent) {
         String title = intent.getStringExtra(Intent.EXTRA_TITLE);
         String text = intent.getStringExtra(Intent.EXTRA_TEXT);
-        Log.d("RWS", "command: " + text);
+        Log.d(TAG, "command: " + text);
         if (EXTRA_TITLE_SOFT_REBOOT.equals(title)) {
             SystemProperties.set("ctl.restart", "surfaceflinger");
             SystemProperties.set("ctl.restart", "zygote");
