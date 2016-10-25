@@ -111,6 +111,10 @@ public class XposedMod implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                     Log.d(RebootUtils.TAG, "reboot, command: " + command);
                     context.sendBroadcast(RebootUtils.newRebootIntent(command));
                     param.setResult(0);
+                } else if(command.contains("recovery")) {
+                    Log.d(RebootUtils.TAG, "reboot to recovery, command: " + command);
+                    context.sendBroadcast(RebootUtils.newRebootRecoveryIntent(command));
+                    param.setResult(0);
                 }
             }
         }

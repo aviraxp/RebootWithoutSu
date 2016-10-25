@@ -14,6 +14,8 @@ public class RebootUtils {
 
     private static final String EXTRA_TITLE_REBOOT = "REBOOT";
 
+    private static final String EXTRA_TITLE_REBOOT_RECOVERY = "REBOOT_RECOVERY";
+
     private RebootUtils() {
 
     }
@@ -27,6 +29,8 @@ public class RebootUtils {
             SystemProperties.set("ctl.restart", "zygote");
         } else if (EXTRA_TITLE_REBOOT.equals(title)) {
             SystemProperties.set("sys.powerctl", "reboot");
+        }else if ((EXTRA_TITLE_REBOOT_RECOVERY).equals(title)) {
+            SystemProperties.set("sys.powerctl", "reboot,recovery");
         }
     }
 
@@ -44,6 +48,10 @@ public class RebootUtils {
 
     public static Intent newRebootIntent(String command) {
         return newIntent(EXTRA_TITLE_REBOOT, command);
+    }
+
+    public static Intent newRebootRecoveryIntent(String command) {
+        return newIntent(EXTRA_TITLE_REBOOT_RECOVERY, command);
     }
 
 }
